@@ -94,18 +94,29 @@ class Player {
 
         }
         if (game.keyboarder.isDown(Keyboarder.KEYS.RIGHT)) {
+            if (this.position.x === Player.LOCATIONS.MIDDLE_LEFT.x) {
+                this.position.x = Player.LOCATIONS.TOP_MIDDLE.x
+            } else {
+                this.position.x = Player.LOCATIONS.MIDDLE_RIGHT.x
 
-            this.position.x = Player.LOCATIONS.MIDDLE_RIGHT.x
+            }
 
         }
         if (game.keyboarder.isDown(Keyboarder.KEYS.UP)) {
-            console.log('move up ,' + Player.LOCATIONS.MIDDLE_MIDDLE)
-            this.position.y = Player.LOCATIONS.TOP_MIDDLE.y
+            if (this.position.y === Player.LOCATIONS.BOTTOM_MIDDLE.y) {
+                this.position.y = Player.LOCATIONS.MIDDLE_LEFT.y
+            } else {
+                this.position.y = Player.LOCATIONS.TOP_MIDDLE.y
+            }
+
 
         }
         if (game.keyboarder.isDown(Keyboarder.KEYS.DOWN)) {
-            console.log('move down ,' + Player.LOCATIONS.MIDDLE_MIDDLE)
-            this.position.y = Player.LOCATIONS.BOTTOM_MIDDLE.y
+            if (this.position.y === Player.LOCATIONS.TOP_MIDDLE.y) {
+                this.position.y = Player.LOCATIONS.MIDDLE_LEFT.y
+            } else {
+                this.position.y = Player.LOCATIONS.BOTTOM_MIDDLE.y
+            }
         }
 
         if (game.keyboarder.isDown(Keyboarder.KEYS.S)) {
