@@ -3,6 +3,7 @@ class Game {
         const canvas = document.getElementById(canvasID)
         this.square = canvas.getContext('2d')
         this.size = { x: canvas.width, y: canvas.height }
+        this.bodies = []
 
         this.keyboarder = new Keyboarder()
 
@@ -18,8 +19,8 @@ class Game {
         }
 
         this.goldenSnitch_position = {
-            x: 160,
-            y: 160
+            x: 175,
+            y: 175
         }
 
         this.goldenSnitch_size = {
@@ -28,17 +29,35 @@ class Game {
         }
 
         this.player = new Player(this.player_position, this.player_size)
+        this.addBody(this.player)
 
         this.goldenSnitch = new GoldenSnitch(this.goldenSnitch_position, this.goldenSnitch_size)
+        this.addBody(this.goldenSnitch)
 
         // this.player.draw(this.square)
 
+    }
+
+    addBody(body) {
+        this.bodies.push(body)
     }
 
     update() {
         this.fillBackground()
         this.player.draw(this.square)
         this.goldenSnitch.draw(this.square)
+
+        /*for (let body of this.bodies) {
+            this.update(body)
+
+            if (colliding(this.player, this.goldenSnitch) === true) {
+                this.goldenSnitch.new_position = {
+                    x: 240,
+                    y: 175
+                }
+                this.move_snitch(this.goldenSnitch.new_position)
+            }
+        }*/
     }
 
     fillBackground() {
@@ -59,7 +78,7 @@ class Game {
 
     run() {
         const tick = () => {
-            console.log('hi')
+            // console.log('hi')
             this.update()
             this.player.update(this)
 
@@ -69,6 +88,7 @@ class Game {
         }
         tick()
     }
+
 
 
 
@@ -150,12 +170,15 @@ class Player {
 
 }
 
+// Player locations dictionary
+
 Player.LOCATIONS = {
     MIDDLE_MIDDLE: { x: 225, y: 225 },
     TOP_MIDDLE: { x: 225, y: 160 },
     BOTTOM_MIDDLE: { x: 225, y: 285 },
     MIDDLE_LEFT: { x: 160, y: 225 },
     MIDDLE_RIGHT: { x: 285, y: 225 }
+
 
 
 
@@ -177,10 +200,10 @@ class GoldenSnitch {
         )
     }
 
-    //     move(new_snicthPosition, screen) {
-    //         this.position.x = new_snitchPosition.x
-    //         this.position.y = new_snitchPosition.y
-    //         this.draw(screen)
+    // move_snitch(new_snitchPosition, screen) {
+    //     this.position.x = new_snitchPosition.x
+    //     this.position.y = new_snitchPosition.y
+    //     this.draw(screen)
 
     // }
 }
@@ -191,10 +214,10 @@ class GoldenSnitch {
 function colliding(b1, b2) {
     return !(
         b1 === b2 ||
-        b1.center.x + b1.size.x / 2 < b2.center.x - b2.size.x / 2 ||
-        b1.center.y + b1.size.y / 2 < b2.center.y - b2.size.y / 2 ||
-        b1.center.x + b1.size.x / 2 > b2.center.x + b2.size.x / 2 ||
-        b1.center.y - b1.size.y / 2 > b2.center.y + b2.size.y / 2
+        b1.position.x + b1.size.x / 2 < b2.position.x - b2.size.x / 2 ||
+        b1.position.y + b1.size.y / 2 < b2.position.y - b2.size.y / 2 ||
+        b1.position.x + b1.size.x / 2 > b2.position.x + b2.size.x / 2 ||
+        b1.position.y - b1.size.y / 2 > b2.position.y + b2.size.y / 2
     )
 }
 
